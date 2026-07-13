@@ -22,45 +22,54 @@ class PhoneFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: aspectRatio,
-      child: RepaintBoundary(
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: const Color(0xFF0D0D0F),
-            borderRadius: BorderRadius.circular(38),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.28),
-                blurRadius: 32,
-                offset: const Offset(0, 18),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Scale every dimension from a 230px reference width so the frame
+          // keeps identical proportions (corner curve, bezel, island) at any
+          // rendered size. A fixed radius over-rounds small frames on phones,
+          // turning the phone into a blob — proportional scaling avoids that.
+          final s = constraints.maxWidth / 230.0;
+          return RepaintBoundary(
+            child: Container(
+              padding: EdgeInsets.all(5 * s),
+              decoration: BoxDecoration(
+                color: const Color(0xFF0D0D0F),
+                borderRadius: BorderRadius.circular(38 * s),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.28),
+                    blurRadius: 32 * s,
+                    offset: Offset(0, 18 * s),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(33),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                child,
-                // Dynamic-island style pill.
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Container(
-                      width: 54,
-                      height: 15,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.85),
-                        borderRadius: BorderRadius.circular(20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(33 * s),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    child,
+                    // Dynamic-island style pill.
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8 * s),
+                        child: Container(
+                          width: 54 * s,
+                          height: 15 * s,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.85),
+                            borderRadius: BorderRadius.circular(20 * s),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

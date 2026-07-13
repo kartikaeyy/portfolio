@@ -117,11 +117,11 @@ class _MobileHero extends StatelessWidget {
                 Text(
                   'Kartikey\nSrivastava',
                   style: GoogleFonts.inter(
-                    fontSize: 64,
+                    fontSize: 52,
                     fontWeight: FontWeight.w800,
                     color: AppColors.ink,
-                    height: 0.92,
-                    letterSpacing: -2,
+                    height: 0.95,
+                    letterSpacing: -1.5,
                   ),
                 ).animate().fadeIn(delay: 100.ms, duration: 800.ms),
                 const SizedBox(height: 32),
