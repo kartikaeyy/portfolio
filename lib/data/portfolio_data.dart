@@ -229,7 +229,7 @@ const kFeatures = [
 const kExperiences = [
   Experience(
     company: 'Apna Mart',
-    role: 'Flutter Intern',
+    role: 'Mobile Developer',
     period: 'Jan 2026 – Present',
     // Consumer app icon, apnamart.in.
     logoAsset: 'assets/images/logos/apna_mart.jpg',

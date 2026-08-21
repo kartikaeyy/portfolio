@@ -22,7 +22,7 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kartikey Srivastava — Flutter Developer',
+      title: 'Kartikey — Mobile Developer',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       scrollBehavior: const _SiteScrollBehavior(),

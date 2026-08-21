@@ -70,10 +70,7 @@ class _HeroContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _StatusPill()
-            .animate()
-            .fadeIn(duration: 500.ms)
-            .slideY(begin: -0.3, end: 0, curve: Motion.curve),
+        const _StatusPill(),
         SizedBox(height: isMobile ? 22 : 28),
         Text(
               'Kartikey\nSrivastava',
@@ -131,13 +128,6 @@ class _HeroContent extends StatelessWidget {
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () => scope?.goToSection(SectionScope.work),
                 ),
-                ActionButton(
-                  label: 'Get in touch',
-                  tone: ActionTone.ghost,
-                  icon: Icons.north_east_rounded,
-                  onPressed: () => scope?.goToSection(SectionScope.chat),
-                ),
-                const SizedBox(width: 4),
                 IconAction(
                   icon: const Glyph.brand(FontAwesomeIcons.github),
                   tooltip: 'GitHub',
@@ -173,8 +163,10 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final current = kExperiences.first;
+    final isMobile = Breaks.isMobile(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(Radii.chip),
@@ -183,37 +175,12 @@ class _StatusPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.live.withValues(alpha: 0.35),
-                    ),
-                  )
-                  .animate(onPlay: (c) => c.repeat(reverse: true))
-                  .fadeOut(duration: 1400.ms, curve: Curves.easeInOut)
-                  .scaleXY(begin: 0.5, end: 1),
-              Container(
-                width: 7,
-                height: 7,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.live,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 10),
           Flexible(
             child: Text(
-              '${current.role} · ${current.company}',
+              '${current.role} @ ${current.company}',
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.inter(
-                fontSize: 13,
+                fontSize: isMobile ? 10 : 13,
                 fontWeight: FontWeight.w600,
                 color: AppColors.ink,
                 letterSpacing: 0.1,
@@ -234,11 +201,6 @@ class _HeroStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = Breaks.isMobile(context);
-    final stats = <(String, String)>[
-      ('${kExperiences.length}', 'internships shipped'),
-      ('${kFeatures.length}', 'features in production'),
-      ('${kSkills.length}', 'tools & frameworks'),
-    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,38 +215,6 @@ class _HeroStats extends StatelessWidget {
           ),
         ),
         SizedBox(height: isMobile ? 18 : 22),
-        Wrap(
-          spacing: isMobile ? 26 : 44,
-          runSpacing: 18,
-          children: [
-            for (final (value, label) in stats)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    value,
-                    style: GoogleFonts.inter(
-                      fontSize: isMobile ? 24 : 30,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.heroYellow,
-                      height: 1,
-                      letterSpacing: -1,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    label,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.inkFaint,
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                ],
-              ),
-          ],
-        ),
       ],
     );
   }

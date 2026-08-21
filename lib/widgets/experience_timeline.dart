@@ -54,58 +54,66 @@ class _TimelineRow extends StatelessWidget {
     final isMobile = Breaks.isMobile(context);
     final railWidth = isMobile ? 26.0 : 40.0;
 
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            width: railWidth,
-            child: Column(
-              children: [
-                const SizedBox(height: 26),
-                Container(
-                  width: 11,
-                  height: 11,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.heroYellow,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.glowYellow.withValues(alpha: 0.5),
-                        blurRadius: 12,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    width: 1.5,
-                    margin: const EdgeInsets.only(top: 6),
+    // The rail line is painted as a positioned child rather than an Expanded
+    // inside an IntrinsicHeight: intrinsic sizing over the card's wrapping text
+    // under-measures its height and forces a tight height it then overflows.
+    return Stack(
+      children: [
+        Positioned(
+          left: (railWidth - 1.5) / 2,
+          top: 43,
+          bottom: 0,
+          width: 1.5,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppColors.heroYellow.withValues(alpha: 0.35),
+                  isLast
+                      ? Colors.transparent
+                      : Colors.white.withValues(alpha: 0.08),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: railWidth,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 26),
+                  Container(
+                    width: 11,
+                    height: 11,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.heroYellow.withValues(alpha: 0.35),
-                          isLast
-                              ? Colors.transparent
-                              : Colors.white.withValues(alpha: 0.08),
-                        ],
-                      ),
+                      shape: BoxShape.circle,
+                      color: AppColors.heroYellow,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.glowYellow.withValues(alpha: 0.5),
+                          blurRadius: 12,
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: isMobile ? Space.md : Space.md),
-              child: _ExperienceCard(exp: exp),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: isMobile ? Space.md : Space.md),
+                child: _ExperienceCard(exp: exp),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -324,50 +332,16 @@ class PeriodPill extends StatelessWidget {
   }
 }
 
-/// Highlight bullets, collapsed to a readable few. The current role has ten of
-/// them; showing all by default turned the card into a wall of text.
-class _Highlights extends StatefulWidget {
+/// Highlight bullets for a role.
+class _Highlights extends StatelessWidget {
   final List<String> items;
   const _Highlights({required this.items});
 
-  static const _collapsedCount = 4;
-
-  @override
-  State<_Highlights> createState() => _HighlightsState();
-}
-
-class _HighlightsState extends State<_Highlights> {
-  bool _expanded = false;
-
   @override
   Widget build(BuildContext context) {
-    final items = widget.items;
-    final hidden = items.length - _Highlights._collapsedCount;
-    final visible = _expanded || hidden <= 0
-        ? items
-        : items.take(_Highlights._collapsedCount).toList();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AnimatedSize(
-          duration: Motion.base,
-          curve: Motion.emphasized,
-          alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [for (final h in visible) _Bullet(text: h)],
-          ),
-        ),
-        if (hidden > 0) ...[
-          const SizedBox(height: Space.xs),
-          _TextToggle(
-            label: _expanded ? 'Show less' : 'Show $hidden more',
-            expanded: _expanded,
-            onTap: () => setState(() => _expanded = !_expanded),
-          ),
-        ],
-      ],
+      children: [for (final h in items) _Bullet(text: h)],
     );
   }
 }
@@ -403,71 +377,6 @@ class _Bullet extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TextToggle extends StatefulWidget {
-  final String label;
-  final bool expanded;
-  final VoidCallback onTap;
-
-  const _TextToggle({
-    required this.label,
-    required this.expanded,
-    required this.onTap,
-  });
-
-  @override
-  State<_TextToggle> createState() => _TextToggleState();
-}
-
-class _TextToggleState extends State<_TextToggle> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: GestureDetector(
-          onTap: widget.onTap,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                widget.label,
-                style: GoogleFonts.inter(
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w600,
-                  color: _hovered
-                      ? AppColors.heroYellowLight
-                      : AppColors.heroYellow,
-                  decoration: _hovered
-                      ? TextDecoration.underline
-                      : TextDecoration.none,
-                  decorationColor: AppColors.heroYellowLight,
-                ),
-              ),
-              const SizedBox(width: 4),
-              AnimatedRotation(
-                duration: Motion.base,
-                turns: widget.expanded ? 0.5 : 0,
-                child: Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 18,
-                  color: _hovered
-                      ? AppColors.heroYellowLight
-                      : AppColors.heroYellow,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
