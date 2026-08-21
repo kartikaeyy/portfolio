@@ -71,12 +71,17 @@ class Experience {
   final String description;
   final List<String> highlights;
 
+  /// The company's own logo, downloaded into assets. Null falls back to a
+  /// monogram tile, so a role without a mark still looks deliberate.
+  final String? logoAsset;
+
   const Experience({
     required this.company,
     required this.role,
     required this.period,
     required this.description,
     required this.highlights,
+    this.logoAsset,
   });
 }
 
@@ -226,6 +231,8 @@ const kExperiences = [
     company: 'Apna Mart',
     role: 'Flutter Intern',
     period: 'Jan 2026 – Present',
+    // Consumer app icon, apnamart.in.
+    logoAsset: 'assets/images/logos/apna_mart.jpg',
     description:
         'Building the iOS and Android Consumer App — shipping features, animations, and '
         'localization while resolving production issues.',
@@ -233,7 +240,6 @@ const kExperiences = [
       'Revamped the onboarding flow end to end, from Splash to Home page',
       'Led app-wide localization for Hindi & Bengali with in-app language switching',
       'Built a cross-page Product Recommendation Rail across Home, Search & Category',
-      'Optimized the Google Places integration, cutting per request API billing and response payload size.',
       'Added Google Phone Number Hint to Android (native) onboarding, removing manual entry at signup.',
       'Rebuilt the GPS & location-permission flow for iOS/Android with denial & fallback states',
       'Optimized the Google Places integration, cutting per-request API billing & payload size',
@@ -246,6 +252,8 @@ const kExperiences = [
     company: 'Ente',
     role: 'Software Engineer Intern',
     period: 'Aug 2025 – Oct 2025',
+    // Site icon, ente.io.
+    logoAsset: 'assets/images/logos/ente.png',
     description:
         'Contributed to the open-source, end-to-end encrypted Photos app at ente.io.',
     highlights: [
@@ -258,6 +266,8 @@ const kExperiences = [
     company: 'Imagined',
     role: 'Flutter Intern',
     period: 'Oct 2024 – Nov 2024',
+    // Site icon, imagined.studio.
+    logoAsset: 'assets/images/logos/imagined.png',
     description:
         'Contributed to Solo, a platform connecting 100+ brands and influencers.',
     highlights: [

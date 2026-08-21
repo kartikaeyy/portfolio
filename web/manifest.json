@@ -1,11 +1,11 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Kartikey Srivastava \u2014 Flutter Developer",
+    "short_name": "Kartikey",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0E0E11",
+    "theme_color": "#0E0E11",
+    "description": "Kartikey Srivastava \u2014 Flutter developer shipping cross-platform apps for iOS and Android.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

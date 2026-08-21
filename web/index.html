@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
@@ -18,29 +12,107 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0E0E11">
+  <meta name="description" content="Kartikey Srivastava — Flutter developer shipping cross-platform apps for iOS and Android. Selected work, experience and contact.">
+  <meta name="author" content="Kartikey Srivastava">
+
+  <!-- Link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kartikey Srivastava — Flutter Developer">
+  <meta property="og:description" content="Crafting apps that people love to use. Selected work, experience and contact.">
+  <meta property="og:image" content="icons/Icon-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kartikey Srivastava — Flutter Developer">
+  <meta name="twitter:description" content="Crafting apps that people love to use.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="portfolio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kartikey">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>portfolio</title>
+  <title>Kartikey Srivastava — Flutter Developer</title>
   <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <style>
+    /* The engine takes a moment to boot; without this the page flashes white
+       before the dark app paints. */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #0E0E11;
+    }
+    /* Only while the engine boots — removed on the first frame so the app owns
+       scrolling from then on. */
+    body.booting { overflow: hidden; }
+    #boot {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      background:
+        radial-gradient(60% 50% at 50% 18%, rgba(255, 215, 0, 0.10), transparent 70%),
+        #0E0E11;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #A8A8B3;
+      transition: opacity 400ms ease;
+      z-index: 2;
+    }
+    #boot.done { opacity: 0; pointer-events: none; }
+    #boot .name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #F5F5F2;
+    }
+    #boot .track {
+      width: 148px;
+      height: 2px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.10);
+      overflow: hidden;
+    }
+    #boot .track span {
+      display: block;
+      width: 40%;
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #FFE566, #FFD700);
+      animation: slide 1.15s ease-in-out infinite;
+    }
+    @keyframes slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #boot .track span { animation: none; width: 100%; }
+    }
+  </style>
+</head>
+<body class="booting">
+  <div id="boot">
+    <div class="name">Kartikey Srivastava</div>
+    <div class="track"><span></span></div>
+  </div>
+
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      document.body.classList.remove('booting');
+      var boot = document.getElementById('boot');
+      if (!boot) return;
+      boot.classList.add('done');
+      setTimeout(function () { boot.remove(); }, 450);
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

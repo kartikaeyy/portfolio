@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../data/portfolio_data.dart';
 import '../theme/app_theme.dart';
+import '../widgets/experience_timeline.dart';
 import '../widgets/feature_card.dart';
 import '../widgets/media.dart';
 import 'feature_detail_page.dart';
@@ -78,6 +79,9 @@ class _WorkPageState extends State<WorkPage> {
               onNext: () => _goTo(_currentPage + 1),
             ),
           ),
+          SizedBox(height: isMobile ? 72 : 112),
+          // The roles behind the features, on the same gutter as the heading.
+          Padding(padding: sidePadding, child: const ExperienceTimeline()),
         ],
       ),
     );
